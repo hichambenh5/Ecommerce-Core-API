@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CoreCommerce API/CoreCommerce API.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+</Solution>
