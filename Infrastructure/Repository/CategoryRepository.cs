@@ -25,25 +25,50 @@ namespace Infrastructure.Repository
         }
         public async Task<int> AddCategoryAsync(Category category)
         {
-            await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
-            return category.CategoryId;
+            try {
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
+                return category.CategoryId;
+            }
+            catch(Exception e)
+            {
+                return 0;
+            }
+            
         }
         public async Task<bool> UpdateCategoryAsync(Category updatedDto)
         {
-            var category = await _context.Categories.FindAsync(updatedDto.CategoryId);
-            if (category == null) return false;
-            MappingExtensions.PatchValues(category, updatedDto);
-           await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                var category = await _context.Categories.FindAsync(updatedDto.CategoryId);
+                if (category == null) return false;
+                MappingExtensions.PatchValues(category, updatedDto);
+                await _context.SaveChangesAsync();
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+          
         }
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null) return false;
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                var category = await _context.Categories.FindAsync(id);
+                if (category == null) return false;
+                _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(DbUpdateException ex)
+            {
+                return false;
+            }catch(Exception e)
+            {
+                return false;
+            }
+            
         }
         public async Task<bool> ExistsCategoryAsync(int id)
         {

@@ -196,6 +196,7 @@ public partial class EcommerceDbContext : DbContext
             entity.HasKey(e => e.ProductId).HasName("PK_ProductID");
 
             entity.ToTable("Product");
+            entity.HasQueryFilter(p => !p.IsDeleted);
 
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");

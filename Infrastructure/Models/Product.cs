@@ -12,6 +12,7 @@ public partial class Product
     public string Note { get; set; } = null!;
 
     public int? CategoryId { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
     public virtual Category? Category { get; set; }
 
