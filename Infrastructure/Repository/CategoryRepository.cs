@@ -80,5 +80,9 @@ namespace Infrastructure.Repository
            return await _context.Categories.AnyAsync(c => c.CategoryName == name);
            
         }
+        public async Task<Category?> GetCategoryWithProductsAsync(int id)
+        {
+            return await _context.Categories.Include(p => p.Products).AsNoTracking().FirstOrDefaultAsync(p => p.CategoryId == id);
+        }
     }
 }

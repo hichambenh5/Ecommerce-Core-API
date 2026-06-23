@@ -77,5 +77,21 @@ namespace Infrastructure.Repository
         {
             return await _context.Products.Where(p => p.CategoryId == categoryId).AsNoTracking().ToListAsync();
         }
+        public async Task<Product?> GetProductDetailsByIdAsync(int id)
+        {
+            return  await _context.Products.Include(p => p.ProductVariants).Include(p => p.ProductReviews).Include(p=>p.ProductImages).AsNoTracking().FirstOrDefaultAsync(p => p.ProductId == id);
+
+        }
+        public async Task<List<Product>> GetLatestProductsAsync(int count)
+        {
+            return await _context.Products.OrderByDescending(p => p.ProductId).Take(count).AsNoTracking().ToListAsync();
+        }
+        public async Task<List<Product>> SearchProductsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))return new List<Product>();
+            return await _context.Products.Where(p => p.ProductName.Contains(searchTerm)).AsNoTracking().ToListAsync();
+
+            
+        }
     }
 }
