@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class ProductRepository
+    public class ProductRepository:IProductRepository
     {
         private readonly EcommerceDbContext _context;
         public ProductRepository(EcommerceDbContext context)
@@ -17,7 +17,7 @@ namespace Infrastructure.Repository
         }
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            return await _context.Products.AsNoTracking().ToListAsync();
+            return await _context.Products.Where(p=>!p.IsDeleted).AsNoTracking().ToListAsync();
         }
         public async Task<Product?> GetProductByIdAsync(int id)
         {

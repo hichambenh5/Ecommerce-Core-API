@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class CategoryRepository
+    public class CategoryRepository:ICategoryRepository
     {
         private readonly EcommerceDbContext _context;
        public CategoryRepository(EcommerceDbContext context)
