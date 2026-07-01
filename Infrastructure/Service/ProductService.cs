@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
 using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
@@ -15,34 +16,102 @@ namespace Infrastructure.Service
         {
             _repo = repo;
         }
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
-            => await _repo.GetAllProductsAsync();
-        public async Task<Product?> GetProductByIdAsync(int id)
-            => await _repo.GetProductByIdAsync(id);
-        public async Task<int> CreateProductAsync(Product product)
+        private ProductResponseDto MapToProductDto(Product product)
         {
-            if(await _repo.ExistsProductAsync(product.ProductName))
+            return new ProductResponseDto
             {
-                throw new Exception($"Product with ID {product.ProductName} already exists.");
-            }
-            return await _repo.AddProductAsync(product);
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                Note = product.Note,
+                CategoryId = product.CategoryId
+            };
         }
-        public async Task<bool> UpdateProductAsync(Product product)
+        public async Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync()
         {
-            return await _repo.UpdateProductAsync(product);
+            var product = await _repo.GetAllProductsAsync();
+            return product.Select( MapToProductDto);
+        }
+      
+          
+        public async Task<ProductResponseDto?> GetProductByIdAsync(int id)
+        {
+            var product = await _repo.GetProductByIdAsync(id);
+            if (product == null) return null;
+            return MapToProductDto(product);
+        }
+           
+        public async Task<int> CreateProductAsync(ProductCreateDto dto)
+        {
+            if(await _repo.ExistsProductAsync(dto.ProductName))
+            {
+                throw new Exception($"Product with ID {dto.ProductName} already exists.");
+
+            }
+            try
+            {
+                var product = new Product
+                {
+                    ProductName = dto.ProductName,
+                    Note = dto.Note,
+                    CategoryId = dto.CategoryId
+                };
+                return await _repo.AddProductAsync(product);
+            }catch(Exception ex)
+            {
+                throw new Exception("An error occurred while saving the product to the database. Please try again later.", ex);
+            }
+          
+        }
+        public async Task<bool> UpdateProductAsync(int id,ProductUpdateDto dto)
+        {
+            try
+            {
+                var product = await _repo.GetProductByIdAsync(id);
+                if (product == null) return false;
+                MappingExtensions.PatchValues(product, dto);
+                return await _repo.UpdateProductAsync(product);
+            }catch(Exception ex)
+            {
+                throw new Exception($"An error occurred while updating product with ID {id}.", ex);
+            }
+          
         }
         public async Task<bool> DeleteProductAsync(int id)
         {
-            return await _repo.DeleteProductAsync(id);
+            try
+            {
+                return await _repo.DeleteProductAsync(id);
+            }catch(Exception ex)
+            {
+                throw new Exception($"An error occurred while deleting product with ID {id}.", ex);
+            }
         }
-        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryId)
-            =>  await _repo.GetProductsByCategoryIdAsync(categoryId);
-        public async Task<Product?> GetProductDetailsAsync(int id)
-            => await _repo.GetProductDetailsByIdAsync(id);
-        public async Task<IEnumerable<Product>> GetLatestProductsAsync(int count)
-        => await _repo.GetLatestProductsAsync(count);
+        
+        public async Task<IEnumerable<ProductResponseDto>> GetProductsByCategoryAsync(int categoryId)
+        {
+            var product = await _repo.GetProductsByCategoryIdAsync(categoryId);
+            return product.Select(MapToProductDto);
+        }
+        public async Task<ProductResponseDto?> GetProductDetailsAsync(int id)
+        {
+            var product = await _repo.GetProductDetailsByIdAsync(id);
+            if (product == null) return null;
+            return MapToProductDto(product);
+        }
+        async Task<bool> ExistsProductAsync(int id) => await _repo.ExistsProductAsync(id);
+        async Task<bool> ExistsProductAsync(string name) => await _repo.ExistsProductAsync(name);
+        public async Task<IEnumerable<ProductResponseDto>> GetLatestProductsAsync(int count)
+        {
+            var product = await _repo.GetLatestProductsAsync(count);
+            return product.Select(MapToProductDto);
 
-        public async Task<IEnumerable< Product>> SearchProductsAsync(string searchTerm)
-            => await _repo.SearchProductsAsync(searchTerm);
+        }
+
+        public async Task<IEnumerable< ProductResponseDto>> SearchProductsAsync(string searchTerm)
+        {
+            var product = await _repo.SearchProductsAsync(searchTerm);
+            return product.Select(MapToProductDto);
+
+        }
     }
 }

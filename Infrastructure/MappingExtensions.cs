@@ -8,17 +8,29 @@ namespace Infrastructure
 {
     public class MappingExtensions
     {
-        public static void PatchValues<T>(T existingEntity, T updatedDto)
+        public static void PatchValues<TSource, TDestination>(TDestination destination, TSource source)
         {
-            var properties = typeof(T).GetProperties();
-            foreach (var property in properties)
+            var sourceProperties = typeof(TSource).GetProperties();
+           
+            var destProperties = typeof(TDestination).GetProperties();
+
+            foreach (var sourceProp in sourceProperties)
             {
-                var newValue = property.GetValue(updatedDto);
-                if(newValue!=null && !newValue.Equals(GetDefaultValue(property.PropertyType)))
+              
+                var destProp = destProperties.FirstOrDefault(p => p.Name == sourceProp.Name);
+
+              
+                if (destProp != null && destProp.CanWrite)
                 {
-                    property.SetValue(existingEntity, newValue);
+                    var newValue = sourceProp.GetValue(source);
+
+                   
+                    if (newValue != null)
+                    {
+                        destProp.SetValue(destination, newValue);
+                    }
                 }
-            }
+                }
         }
         private static object? GetDefaultValue(Type type)
         {

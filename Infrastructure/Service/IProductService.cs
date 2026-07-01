@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,16 @@ namespace Infrastructure.Service
 {
    public interface IProductService
     {
-        Task<IEnumerable<Product>> GetAllProductsAsync();
-        Task<Product?> GetProductByIdAsync(int id);
-        Task<int> CreateProductAsync(Product product); 
-        Task<bool> UpdateProductAsync(Product product);
+        Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync();
+        Task<ProductResponseDto?> GetProductByIdAsync(int id);
+        Task<int> CreateProductAsync(ProductCreateDto dto); 
+        Task<bool> UpdateProductAsync(int id,ProductUpdateDto dto);
         Task<bool> DeleteProductAsync(int id); 
-        Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryId);
-        Task<Product?> GetProductDetailsAsync(int id);
-        Task<IEnumerable<Product>> GetLatestProductsAsync(int count);
-        Task<IEnumerable<Product>> SearchProductsAsync(string searchTerm);
+        Task<IEnumerable<ProductResponseDto>> GetProductsByCategoryAsync(int categoryId);
+        Task<ProductResponseDto?> GetProductDetailsAsync(int id);
+        Task<bool> ExistsProductAsync(int id);
+        Task<bool> ExistsProductAsync(string name);
+        Task<IEnumerable<ProductResponseDto>> GetLatestProductsAsync(int count);
+        Task<IEnumerable<ProductResponseDto>> SearchProductsAsync(string searchTerm);
     }
 }
