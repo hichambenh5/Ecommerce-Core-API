@@ -91,20 +91,20 @@ public partial class EcommerceDbContext : DbContext
 
         modelBuilder.Entity<Image>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Image");
+            entity.HasKey(e => e.ImageId).HasName("PK_ImageID");
 
-            entity.Property(e => e.ImageId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("ImageID");
+            entity.ToTable("Image");
+
+            entity.Property(e => e.ImageId).HasColumnName("ImageID");
             entity.Property(e => e.ImageUrl).HasMaxLength(250);
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
-            entity.HasOne(d => d.Product).WithMany()
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__Image__ProductID__797309D9");
+           
+            entity.HasOne(d => d.Product)
+                  .WithMany(p => p.ProductImages) 
+                  .HasForeignKey(d => d.ProductId)
+                  .OnDelete(DeleteBehavior.Cascade)
+                  .HasConstraintName("FK__Image__ProductID__797309D9");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -206,6 +206,7 @@ public partial class EcommerceDbContext : DbContext
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK__Product__Categor__778AC167");
+          
         });
 
         modelBuilder.Entity<ProductReview>(entity =>

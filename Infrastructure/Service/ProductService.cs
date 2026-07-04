@@ -98,8 +98,8 @@ namespace Infrastructure.Service
             if (product == null) return null;
             return MapToProductDto(product);
         }
-        async Task<bool> ExistsProductAsync(int id) => await _repo.ExistsProductAsync(id);
-        async Task<bool> ExistsProductAsync(string name) => await _repo.ExistsProductAsync(name);
+        public  async Task<bool> ExistsProductAsync(int id) => await _repo.ExistsProductAsync(id);
+        public async Task<bool> ExistsProductAsync(string name) => await _repo.ExistsProductAsync(name);
         public async Task<IEnumerable<ProductResponseDto>> GetLatestProductsAsync(int count)
         {
             var product = await _repo.GetLatestProductsAsync(count);
