@@ -88,5 +88,15 @@ namespace Infrastructure.Service
          
             return dto;
         }
+        public async Task<bool> RestoreCategoryAsync(int id)
+        {
+            try
+            {
+                return await _repo.RestoreCategoryAsync(id);
+            }catch(Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

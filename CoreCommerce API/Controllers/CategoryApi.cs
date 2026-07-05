@@ -157,5 +157,17 @@ namespace CoreCommerce_API.Controllers
             }
             return Ok(CategoryWithProducts);
         }
+        [HttpPatch("restore/{id}", Name = "RestoreCategory")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> RestoreCategoryAsync(int id)
+        {
+            var success = await _categoryService.RestoreCategoryAsync(id);
+            if (!success)
+            {
+                return NotFound($"Category with id {id} not found or is already active.");
+            }
+            return Ok(new { Message = "Category restored successfully." });
+        }
     }
 }

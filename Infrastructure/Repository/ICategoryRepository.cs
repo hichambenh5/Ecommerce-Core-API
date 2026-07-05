@@ -17,5 +17,6 @@ namespace Infrastructure.Repository
         Task<bool> ExistsCategoryAsync(int id);
         Task<bool> ExistsCategoryAsync(string name);
         Task<Category?> GetCategoryWithProductsAsync(int id);
+        Task<bool> RestoreCategoryAsync(int id);
     }
 }

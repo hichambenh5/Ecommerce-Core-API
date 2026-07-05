@@ -21,5 +21,6 @@ namespace Infrastructure.Service
         Task<bool> ExistsProductAsync(string name);
         Task<IEnumerable<ProductResponseDto>> GetLatestProductsAsync(int count);
         Task<IEnumerable<ProductResponseDto>> SearchProductsAsync(string searchTerm);
+        Task<bool> RestoreProductAsync(int id);
     }
 }

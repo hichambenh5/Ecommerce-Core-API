@@ -80,5 +80,18 @@ namespace Infrastructure.Repository
 
             
         }
+        public async Task<bool> RestoreProductAsync(int id)
+        {
+           
+            var product = await _context.Products
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product == null || !product.IsDeleted) return false;
+
+            product.IsDeleted = false;
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

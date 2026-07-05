@@ -113,5 +113,16 @@ namespace Infrastructure.Service
             return product.Select(MapToProductDto);
 
         }
+        public async Task<bool> RestoreProductAsync(int id)
+        {
+            try
+            {
+                return await _repo.RestoreProductAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

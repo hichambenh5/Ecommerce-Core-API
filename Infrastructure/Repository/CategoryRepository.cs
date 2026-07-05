@@ -71,5 +71,24 @@ namespace Infrastructure.Repository
         {
             return await _context.Categories.Include(p => p.Products).AsNoTracking().FirstOrDefaultAsync(p => p.CategoryId == id);
         }
+        public async Task<bool> RestoreCategoryAsync(int id)
+        {
+            var category = await _context.Categories
+         .IgnoreQueryFilters()
+         .FirstOrDefaultAsync(c => c.CategoryId == id);
+
+           
+            if (category == null) return false;
+
+           
+            if (category.IsDeleted == false) return false;
+
+            category.IsDeleted = false;
+
+            _context.Entry(category).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

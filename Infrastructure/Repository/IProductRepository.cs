@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
         Task<Product?> GetProductDetailsByIdAsync(int id);
         Task<List<Product>> GetLatestProductsAsync(int count);
         Task<List<Product>> SearchProductsAsync(string searchTerm);
-
+        Task<bool> RestoreProductAsync(int id);
 
     }
 }

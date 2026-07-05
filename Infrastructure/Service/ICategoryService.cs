@@ -18,5 +18,6 @@ namespace Infrastructure.Service
         Task<bool> ExistsCategoryAsync(string name);
 
         Task<CategoryResponseDto?> GetCategoryWithProductsAsync(int id);
+        Task<bool> RestoreCategoryAsync(int id);
     }
 }

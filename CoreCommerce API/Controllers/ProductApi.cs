@@ -215,6 +215,13 @@ namespace CoreCommerce_API.Controllers
             }
             return Ok(Products);
         }
-      
+        [HttpPatch("restore/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> RestoreProductAsync(int id)
+        {
+            var result = await _productService.RestoreProductAsync(id);
+            return result ? Ok("Product restored.") : BadRequest("Product not found or already active.");
+        }
     }
 }
