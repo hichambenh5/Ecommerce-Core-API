@@ -45,13 +45,17 @@ namespace Infrastructure.Repository
         }
         public async Task<bool> DeleteCategoryAsync(int id)
         {
-        
-                var category = await _context.Categories.FindAsync(id);
-                if (category == null) return false;
-                _context.Categories.Remove(category);
-                await _context.SaveChangesAsync();
-                return true;
+
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null) return false;
+
            
+            category.IsDeleted = true;
+            _context.Categories.Update(category);
+
+            await _context.SaveChangesAsync();
+            return true;
+
         }
         public async Task<bool> ExistsCategoryAsync(int id)
         {

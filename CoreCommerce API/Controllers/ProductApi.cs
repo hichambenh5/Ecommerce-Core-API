@@ -104,7 +104,7 @@ namespace CoreCommerce_API.Controllers
             var product = await _productService.GetProductByIdAsync(id);
             if (product == null)
             {
-                return NotFound($"product with id {id} found");
+                return NotFound($"product with id {id} not found");
             }
             product.ProductName = dto.ProductName;
             product.Note = dto.Note;
@@ -215,5 +215,6 @@ namespace CoreCommerce_API.Controllers
             }
             return Ok(Products);
         }
+      
     }
 }

@@ -71,6 +71,10 @@ public partial class EcommerceDbContext : DbContext
             entity.HasKey(e => e.CategoryId).HasName("PK_Categorys");
 
             entity.ToTable("Category");
+            entity.HasQueryFilter(c => !EF.Property<bool>(c, "IsDeleted"));
+            entity.Property<bool>("IsDeleted")
+     .IsRequired()
+     .HasColumnType("bit");
 
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CategoryName).HasMaxLength(100);
