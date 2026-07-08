@@ -35,3 +35,20 @@ public class CategoryUpdateDto
 {
     public string CategoryName { get; set; } = null!;
 }
+public class CreateRoleDto
+{
+    public string RoleName { get; set; } = null!;
+    public int NumberPermissions { get; set; }
+}
+public class UpdateRoleDto
+{
+    public int RoleId { get; set; }
+    public string RoleName { get; set; } = null!;
+    public int NumberPermissions { get; set; }
+}
+public class RoleDto
+{
+    public int RoleId { get; set; }
+    public string RoleName { get; set; } = null!;
+    public int NumberPermissions { get; set; }
+}

@@ -172,7 +172,7 @@ namespace CoreCommerce_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ExistsProductAsync(string name)
+        public async Task<ActionResult> ExistsProductByNameAsync(string name)
         {
             var exist = await _productService.ExistsProductAsync(name);
             if (exist)

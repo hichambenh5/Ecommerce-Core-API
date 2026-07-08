@@ -61,7 +61,7 @@ namespace CoreCommerce_API.Controllers
             {
                 CategoryName = dto.CategoryName
             };
-            return CreatedAtRoute("GetCategoryByIdAsync", new { id = categorycreate }, response);
+            return CreatedAtRoute("GetCategoryById", new { id = categorycreate }, response);
         }
         [HttpDelete("{id}", Name = "DeleteCategoryAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -128,7 +128,7 @@ namespace CoreCommerce_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ExistsCategoryAsync(string name)
+        public async Task<ActionResult> ExistsCategoryByNameAsync(string name)
         {
             var exist = await _categoryService.ExistsCategoryAsync(name);
             if (exist)
@@ -140,7 +140,7 @@ namespace CoreCommerce_API.Controllers
                 return NotFound();
             }
         }
-        [HttpGet("CategoryWithProducts", Name = "GetCategoryWithProductsAsync")]
+        [HttpGet("CategoryWithProducts/{id}", Name = "GetCategoryWithProductsAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
