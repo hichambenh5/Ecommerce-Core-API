@@ -52,3 +52,33 @@ public class RoleDto
     public string RoleName { get; set; } = null!;
     public int NumberPermissions { get; set; }
 }
+public class UserRegisterDto
+{
+    public string UserName { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string Password { get; set; } = null!; // كلمة السر الخام
+}
+public class UserUpdateDto
+{
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+}
+public class UserResponseDto
+{
+    public int UserId { get; set; }
+    public string UserName { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public int? RoleId { get; set; }
+}
+public class UserLoginDto
+{
+    public string UserName { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+}
+public class ChangePasswordDto
+{
+    public string OldPassword { get; set; } = string.Empty;
+    public string NewPassword { get; set; } = string.Empty;
+}
