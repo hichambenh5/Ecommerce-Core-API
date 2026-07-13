@@ -12,11 +12,11 @@ namespace CoreCommerce_API.Controllers
     public class UserApi : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IUserRepository _repo; // أو اسم الـ Repository الخاص بك
-        public UserApi(IUserService userService,IUserRepository repo)
+      
+        public UserApi(IUserService userService)
         {
             _userService = userService;
-            _repo = repo;
+           
         }
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserResponseDto))]
@@ -90,21 +90,8 @@ namespace CoreCommerce_API.Controllers
 
             return Ok(new { message = "Password updated successfully." });
         }
-        [HttpGet("fix-passwords-emergency")]
-        public async Task<IActionResult> FixPasswordsEmergency()
-        {
-            // جلب كل المستخدمين مباشرة من قاعدة البيانات
-            var users = await _repo.GetAllUsersAsync(0,1000);
+     
 
-            foreach (var user in users)
-            {
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword("1234");
-               await _repo.UpdateUserAsync(user); // تحديث الـ Entity مباشرة
-            }
-
-          
-            return Ok("تم التحديث.");
-        }
 
     }
 }
