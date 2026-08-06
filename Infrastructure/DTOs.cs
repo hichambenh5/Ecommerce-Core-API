@@ -82,3 +82,25 @@ public class ChangePasswordDto
     public string OldPassword { get; set; } = string.Empty;
     public string NewPassword { get; set; } = string.Empty;
 }
+public class OrderResponseDto
+{
+    public int OrderId { get; set; }
+    public DateTime OrderDate { get; set; }
+    public decimal TotalPrice { get; set; }
+    public string OrderStatus { get; set; } = null!;
+    public int? UserId { get; set; }
+    public int? CouponsId { get; set; }
+}
+public class OrderCreateDto
+{
+    public decimal TotalPrice { get; set; }
+    public int? UserId { get; set; }
+    public int? CouponsId { get; set; }
+
+
+}
+public class OrderUpdateDto
+{
+    public string? OrderStatus { get; set; } = null!;
+    public decimal? TotalPrice { get; set; } 
+}

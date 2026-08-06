@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Service
 {
-    internal class IOrderService
+    public interface IOrderService
     {
+        Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync();
+        Task<OrderResponseDto?> GetOrderByIdAsync(int id);
+        Task<int> AddOrderAsync(OrderCreateDto order);
+        Task<bool> UpdateOrderAsync(int id,OrderUpdateDto order);
+        Task<bool> DeleteOrderAsync(int id);
+        Task<bool> ExistsOrderAsync(int id);
     }
 }
