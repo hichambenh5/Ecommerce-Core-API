@@ -104,3 +104,35 @@ public class OrderUpdateDto
     public string? OrderStatus { get; set; } = null!;
     public decimal? TotalPrice { get; set; } 
 }
+public class CouponDto
+{
+    public int CouponsId { get; set; }
+    public string Code { get; set; } = null!;
+    public string DiscountType { get; set; } = null!;
+    public decimal Value { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int UsageLimit { get; set; }
+    public bool IsActive { get; set; }
+}
+public class CreateCouponDto
+{
+    public string Code { get; set; } = null!;
+    public string DiscountType { get; set; } = null!;
+    public decimal Value { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int UsageLimit { get; set; }
+    public bool IsActive { get; set; }
+}
+public class UpdateCouponDto
+{
+    public int CouponsId { get; set; }
+    public string Code { get; set; } = null!;
+    public string DiscountType { get; set; } = null!;
+    public decimal Value { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int UsageLimit { get; set; }
+    public bool IsActive { get; set; }
+}
