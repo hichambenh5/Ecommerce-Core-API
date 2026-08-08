@@ -127,7 +127,7 @@ public class CreateCouponDto
 }
 public class UpdateCouponDto
 {
-    public int CouponsId { get; set; }
+ 
     public string Code { get; set; } = null!;
     public string DiscountType { get; set; } = null!;
     public decimal Value { get; set; }
