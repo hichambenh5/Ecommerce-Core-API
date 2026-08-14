@@ -51,6 +51,18 @@ namespace Infrastructure.Repository
         {
             return await _context.Orders.AnyAsync(o => o.OrderId == id);
         }
-      
+       public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _context.Orders.Where(o=>o.UserId==userId).Include(u => u.User).AsNoTracking().ToListAsync();
+        }
+        public async Task<bool> UpdateOrderStatusAsync(int id, string newStatus)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null) return false;
+            order.OrderStatus = newStatus;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

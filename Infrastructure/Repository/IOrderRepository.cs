@@ -15,6 +15,8 @@ namespace Infrastructure.Repository
         Task<bool> UpdateOrderAsync(Order order);
         Task<bool> DeleteOrderAsync(int id);
         Task<bool> ExistsOrderAsync(int id);
-       
+        Task<List<Order>> GetOrdersByUserIdAsync(int userId);
+        Task<bool> UpdateOrderStatusAsync(int id, string newStatus);
+
     }
 }

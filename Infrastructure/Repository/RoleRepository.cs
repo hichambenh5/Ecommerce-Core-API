@@ -50,6 +50,6 @@ public RoleRepository(EcommerceDbContext context)
         {
             return await _context.Roles.AnyAsync(r => r.RoleName == roleName);
         }
-
+       
     }
 }

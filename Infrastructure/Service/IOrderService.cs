@@ -16,5 +16,7 @@ namespace Infrastructure.Service
         Task<bool> UpdateOrderAsync(int id,OrderUpdateDto order);
         Task<bool> DeleteOrderAsync(int id);
         Task<bool> ExistsOrderAsync(int id);
+        Task<IEnumerable<OrderResponseDto>> GetOrdersByUserIdAsync(int userId);
+        Task<bool> UpdateOrderStatusAsync(int id, string newStatus);
     }
 }

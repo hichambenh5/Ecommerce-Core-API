@@ -93,5 +93,21 @@ namespace Infrastructure.Service
             }
         }
         public async Task<bool> ExistsOrderAsync(int id) => await _repo.ExistsOrderAsync(id);
+        public async Task<IEnumerable<OrderResponseDto>> GetOrdersByUserIdAsync(int userId)
+        {
+            var orders = await _repo.GetOrdersByUserIdAsync(userId);
+            return orders.Select(MapToOrderDto);
+        }
+        public async Task<bool> UpdateOrderStatusAsync(int id, string newStatus)
+        {
+            try
+            {
+                return await _repo.UpdateOrderStatusAsync(id, newStatus);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while updating status for Order with ID {id}.", ex);
+            }
+        }
     }
 }
