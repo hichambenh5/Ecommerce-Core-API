@@ -21,7 +21,11 @@ namespace Infrastructure.Repository
         }
         public async Task<Order?> GetOrderByIdAsync(int id)
         {
-            return await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.OrderId == id);
+            return await _context.Orders
+         .AsNoTracking()
+         .Include(o => o.OrderItems)             
+             .ThenInclude(oi => oi.Variant)      
+         .FirstOrDefaultAsync(o => o.OrderId == id);
         }
         public async Task<int> AddOrderAsync(Order order)
         {
@@ -53,7 +57,13 @@ namespace Infrastructure.Repository
         }
        public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
         {
-            return await _context.Orders.Where(o=>o.UserId==userId).Include(u => u.User).AsNoTracking().ToListAsync();
+            return await _context.Orders
+         .Where(o => o.UserId == userId)
+         .Include(o => o.OrderItems)           
+             .ThenInclude(oi => oi.Variant)       
+         .Include(u => u.User)                    
+         .AsNoTracking()
+         .ToListAsync();
         }
         public async Task<bool> UpdateOrderStatusAsync(int id, string newStatus)
         {

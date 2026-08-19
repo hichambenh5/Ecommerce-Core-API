@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DTOs;
+using Infrastructure.Models;
 using Infrastructure.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,22 +49,19 @@ namespace CoreCommerce_API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<OrderCreateDto>> AddOrderAsync(OrderCreateDto dto)
         {
-            if (dto == null || dto.TotalPrice <= 0 || dto.UserId <1 || dto.CouponsId <1)
+            if (dto == null || dto.TotalPrice <= 0 || dto.UserId <1 || dto.OrderItems == null || !dto.OrderItems.Any())
             {
-                return BadRequest("invalid Order Data");
+                return BadRequest("Invalid Order Data or empty order items.");
             }
-            var OrderCreate = await _orderService.AddOrderAsync(dto);
-            if (OrderCreate <= 0)
+            var orderId = await _orderService.AddOrderAsync(dto);
+            if (orderId <= 0)
             {
                 return BadRequest("Error creating Order");
             }
-            var response = new OrderCreateDto
-            {
-                TotalPrice = dto.TotalPrice,
-                UserId = dto.UserId,
-                CouponsId = dto.CouponsId
-            };
-            return CreatedAtRoute("GetOrderById", new { id = OrderCreate }, response);
+
+            var createdOrder = await _orderService.GetOrderByIdAsync(orderId);
+
+            return CreatedAtRoute("GetOrderById", new { id = orderId }, createdOrder);
         }
         [HttpDelete("{id}",Name = "DeleteOrderAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]

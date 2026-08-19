@@ -25,7 +25,14 @@ namespace Infrastructure.Service
                 TotalPrice=order.TotalPrice,
                 OrderStatus=order.OrderStatus,
                 UserId=order.UserId,
-                CouponsId=order.CouponsId
+                CouponsId=order.CouponsId,
+                OrderItems = order.OrderItems?.Select(oi => new OrderItemResponseDto
+                {
+                    OrderItemId = oi.OrderItemId,
+                    Quantity = oi.Quantity,
+                    Price = oi.Price,
+                    VariantId = oi.VariantId
+                }).ToList() ?? new List<OrderItemResponseDto>()
             };
         }
         public async Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync()
@@ -42,14 +49,23 @@ namespace Infrastructure.Service
         {
             try
             {
-                var order = new Order
-                {
+              
 
-                    TotalPrice = createorder.TotalPrice,
-
-                    UserId = createorder.UserId,
-                    CouponsId = createorder.CouponsId
-                };
+                   var order = new Order
+        {
+            TotalPrice = createorder.TotalPrice,
+            UserId = createorder.UserId,
+            CouponsId = createorder.CouponsId,
+            OrderStatus = "Pending", 
+            OrderDate = DateTime.UtcNow,
+                       OrderItems = createorder.OrderItems.Select(oi => new OrderItem
+                       {
+                           VariantId = oi.VariantId,
+                           Quantity = oi.Quantity,
+                           Price = oi.Price
+                       }).ToList()
+                   };
+                
                 return await _repo.AddOrderAsync(order);
             }catch(Exception ex)
             {

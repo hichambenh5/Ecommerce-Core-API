@@ -90,14 +90,30 @@ public class OrderResponseDto
     public string OrderStatus { get; set; } = null!;
     public int? UserId { get; set; }
     public int? CouponsId { get; set; }
+    public List<OrderItemResponseDto> OrderItems { get; set; } = new();
+}
+public class OrderItemResponseDto
+{
+    public int OrderItemId { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public int? VariantId { get; set; }
+   
 }
 public class OrderCreateDto
 {
     public decimal TotalPrice { get; set; }
     public int? UserId { get; set; }
     public int? CouponsId { get; set; }
+    public List<OrderItemCreateDto> OrderItems { get; set; } = new();
 
-
+}
+public class OrderItemCreateDto
+{
+    public int VariantId { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+ 
 }
 public class OrderUpdateDto
 {
