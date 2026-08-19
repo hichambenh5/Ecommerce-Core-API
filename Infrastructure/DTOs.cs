@@ -152,3 +152,29 @@ public class UpdateCouponDto
     public int UsageLimit { get; set; }
     public bool IsActive { get; set; }
 }
+public class ProductVariantResponseDto
+{
+    public int VariantId { get; set; }
+    public int Quantity { get; set; }
+    public string Color { get; set; } = null!;
+    public string Size { get; set; } = null!;
+    public decimal Price { get; set; }
+    public int? ProductId { get; set; }
+}
+
+public class ProductVariantCreateDto
+{
+    public int Quantity { get; set; }
+    public string Color { get; set; } = null!;
+    public string Size { get; set; } = null!;
+    public decimal Price { get; set; }
+    public int? ProductId { get; set; }
+}
+
+public class ProductVariantUpdateDto
+{
+    public int? Quantity { get; set; }
+    public string? Color { get; set; }
+    public string? Size { get; set; }
+    public decimal? Price { get; set; }
+}
