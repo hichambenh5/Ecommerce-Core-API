@@ -178,3 +178,21 @@ public class ProductVariantUpdateDto
     public string? Size { get; set; }
     public decimal? Price { get; set; }
 }
+public class AddToCartDto
+{
+    public int VariantId { get; set; }
+    public int Quantity { get; set; }
+}
+public class UpdateCartItemDto
+{
+    public int Quantity { get; set; }
+}
+public class CartItemDto
+{
+    public int ShoppingCartId { get; set; }
+    public int UserId { get; set; }
+    public int VariantId { get; set; }
+    public int Quantity { get; set; }
+
+   
+}

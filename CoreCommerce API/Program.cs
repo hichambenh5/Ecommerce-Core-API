@@ -26,6 +26,8 @@ builder.Services.AddScoped<ICouponRepository,CouponRepository>();
 builder.Services.AddScoped<ICouponService,CouponService>();
 builder.Services.AddScoped<IProductVariantRepository,ProductVariantRepository>();
 builder.Services.AddScoped<IProductVariantService, ProductVariantService>();
+builder.Services.AddScoped<IShoppingCartRepository,ShoppingCartRepository>();
+builder.Services.AddScoped<IShoppingCartService,ShoppingCartService>();
 
 
 

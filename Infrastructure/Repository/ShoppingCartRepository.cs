@@ -15,9 +15,13 @@ namespace Infrastructure.Repository
         {
             _context = context;
         }
-        public async Task<ShoppingCart> GetCartItemsByUserIdAsync(int userId)
+        public async Task<IEnumerable<ShoppingCart>> GetCartItemsByUserIdAsync(int userId)
         {
-            return await _context.ShoppingCarts.AsNoTracking().FirstOrDefaultAsync(sc => sc.UserId == userId);
+            return await _context.ShoppingCarts
+         .Where(sc => sc.UserId == userId)
+         .Include(sc => sc.Variant) 
+         .AsNoTracking()
+         .ToListAsync();
         }
         public async Task<int> CreateCartAsync(ShoppingCart cart)
         {
@@ -66,9 +70,13 @@ namespace Infrastructure.Repository
         }
         public async Task<bool> ClearCartAsync(int userId)
         {
-            var shoppingCart = await _context.ShoppingCarts.FirstOrDefaultAsync(sc=>sc.UserId==userId);
-            if (shoppingCart == null) return false;
-            _context.ShoppingCarts.Remove(shoppingCart);
+            var userItems = await _context.ShoppingCarts
+         .Where(sc => sc.UserId == userId)
+         .ToListAsync();
+
+            if (!userItems.Any()) return false; 
+
+            _context.ShoppingCarts.RemoveRange(userItems);
             await _context.SaveChangesAsync();
             return true;
         }
