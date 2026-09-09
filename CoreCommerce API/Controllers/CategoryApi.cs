@@ -1,7 +1,9 @@
-﻿using Infrastructure.DTOs;
+﻿
+using Infrastructure.DTOs;
 using Infrastructure.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoreCommerce_API.Controllers
 {
@@ -14,6 +16,8 @@ namespace CoreCommerce_API.Controllers
         {
             _categoryService = categoryService;
         }
+      
+
         [HttpGet("All", Name = "GetAllCategories")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -103,6 +107,7 @@ namespace CoreCommerce_API.Controllers
             {
                 return Ok(dto);
             }
+
             else
             {
                 return StatusCode(500, "update errer");

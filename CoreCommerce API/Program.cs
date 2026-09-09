@@ -28,7 +28,8 @@ builder.Services.AddScoped<IProductVariantRepository,ProductVariantRepository>()
 builder.Services.AddScoped<IProductVariantService, ProductVariantService>();
 builder.Services.AddScoped<IShoppingCartRepository,ShoppingCartRepository>();
 builder.Services.AddScoped<IShoppingCartService,ShoppingCartService>();
-
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 
 

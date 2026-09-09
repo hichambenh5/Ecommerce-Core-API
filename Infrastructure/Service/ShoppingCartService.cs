@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Service
 {
-    public class ShoppingCartService:IShoppingCartService
+    public
+        class ShoppingCartService:IShoppingCartService
     {
         private readonly IShoppingCartRepository _cartRepo;
 
@@ -40,10 +41,11 @@ namespace Infrastructure.Service
                 throw new Exception($"An error occurred while retrieving the cart for user ID {userId}.", ex);
             }
         }
-        public async Task<int> CreateCartAsync(int userId, AddToCartDto dto)
+        public async Task<int> CreateCartAsync(int userId,AddToCartDto dto)
         {
             try
             {
+               
                 var cartItem = new ShoppingCart
                 {
                     UserId = userId,

@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.DTOs;
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.DTOs;
 
 public class ProductResponseDto
 {
@@ -195,4 +198,22 @@ public class CartItemDto
     public int Quantity { get; set; }
 
    
+}
+public class ImageCreateDto
+{
+    public string ImageUrl { get; set; } = null!;
+    public int? ProductId { get; set; }
+}
+
+public class ImageUpdateDto
+{
+    public int ImageId { get; set; }
+    public string ImageUrl { get; set; } = null!;
+    public int? ProductId { get; set; }
+}
+public class ImageResponseDto
+{
+    public int ImageId { get; set; }
+    public string ImageUrl { get; set; } = null!;
+    public int? ProductId { get; set; }
 }
