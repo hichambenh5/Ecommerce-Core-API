@@ -217,3 +217,25 @@ public class ImageResponseDto
     public string ImageUrl { get; set; } = null!;
     public int? ProductId { get; set; }
 }
+public class AddressDto
+{
+    public int AddressId { get; set; }
+    public string City { get; set; } = null!;
+    public string StreetAddress { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
+}
+public class CreateAddressDto
+{
+    public string City { get; set; } = null!;
+    public string StreetAddress { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
+    public int UserId { get; set; }
+
+}
+public class UpdateAddressDto
+{
+   
+    public string City { get; set; } = null!;
+    public string StreetAddress { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
+}

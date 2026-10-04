@@ -30,8 +30,21 @@ builder.Services.AddScoped<IShoppingCartRepository,ShoppingCartRepository>();
 builder.Services.AddScoped<IShoppingCartService,ShoppingCartService>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin() 
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
 
 var app = builder.Build();
 

@@ -101,7 +101,6 @@ namespace CoreCommerce_API.Controllers
                 return BadRequest("Invalid cart item ID");
             }
 
-            // يمكنك إضافة تحقق هنا للتأكد أن العنصر موجود قبل حذفه إذا أردت
             await _shoppingCartService.RemoveCartItemAsync(shoppingCartId);
             return Ok(new { message = "Cart item removed successfully" });
         }
